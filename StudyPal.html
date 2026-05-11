@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyPal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#dff4ff;
+overflow-x:hidden;
+color:#35506b;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+linear-gradient(rgba(255,255,255,0.4),rgba(255,255,255,0.4)),
+url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+z-index:-2;
+}
+
+body::after{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background:linear-gradient(to bottom right,
+rgba(198,238,255,0.35),
+rgba(217,255,227,0.35));
+z-index:-1;
+}
+
+/* REGISTER PAGE */
+
+.register-page{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.register-card{
+width:450px;
+background:rgba(255,255,255,0.82);
+backdrop-filter:blur(14px);
+padding:40px;
+border-radius:30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.logo{
+font-size:48px;
+font-weight:700;
+color:#68a9d7;
+margin-bottom:10px;
+}
+
+.tagline{
+margin-bottom:30px;
+color:#607d96;
+}
+
+.input-group{
+margin-bottom:20px;
+text-align:left;
+}
+
+.input-group label{
+display:block;
+margin-bottom:8px;
+font-weight:500;
+}
+
+.input-group input,
+.input-group select{
+width:100%;
+padding:15px;
+border:none;
+border-radius:16px;
+background:#f2fbff;
+outline:none;
+font-size:15px;
+}
+
+::placeholder{
+color:#8ba5ba;
+}
+
+.continue-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:linear-gradient(to right,#89d8ff,#9ce4b2);
+color:white;
+font-size:17px;
+font-weight:600;
+cursor:pointer;
+margin-top:10px;
+transition:0.3s;
+}
+
+.continue-btn:hover{
+transform:scale(1.02);
+}
+
+/* POPUP */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(12px);
+padding:40px;
+border-radius:28px;
+text-align:center;
+width:390px;
+display:none;
+z-index:1000;
+box-shadow:0 15px 35px rgba(0,0,0,0.12);
+}
+
+.popup button{
+margin-top:20px;
+padding:12px 28px;
+border:none;
+border-radius:15px;
+background:#9ce4b2;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+display:none;
+padding:30px;
+min-height:100vh;
+}
+
+/* TOP ROW */
+
+.top-row{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+margin-bottom:25px;
+}
+
+.card{
+background:rgba(255,255,255,0.82);
+backdrop-filter:blur(14px);
+border-radius:28px;
+padding:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.07);
+transition:0.3s ease;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.small-card{
+text-align:center;
+}
+
+.small-card h2{
+font-size:30px;
+margin-bottom:10px;
+}
+
+/* MAIN GRID */
+
+.main-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+margin-bottom:25px;
+}
+
+/* TIMER */
+
+.timer-circle{
+width:240px;
+height:240px;
+margin:auto;
+margin-top:20px;
+border-radius:50%;
+background:conic-gradient(#7fcfff 0deg,#9ee7b3 0deg,#edf8ff 0deg);
+display:flex;
+justify-content:center;
+align-items:center;
+transition:0.5s;
+}
+
+.inner-circle{
+width:190px;
+height:190px;
+background:white;
+border-radius:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.time{
+font-size:42px;
+font-weight:700;
+}
+
+.progress-bar{
+width:100%;
+height:14px;
+background:#ebf7ff;
+border-radius:20px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:linear-gradient(to right,#8fd9ff,#a2ebb7);
+}
+
+/* BUTTONS */
+
+.button-group{
+display:flex;
+gap:12px;
+margin-top:20px;
+}
+
+.button-group button{
+flex:1;
+padding:13px;
+border:none;
+border-radius:14px;
+font-weight:600;
+cursor:pointer;
+}
+
+.start{
+background:#9ce4b2;
+color:white;
+}
+
+.pause{
+background:#95d5ff;
+color:white;
+}
+
+.reset{
+background:#ffdcdc;
+}
+
+/* TODO */
+
+.todo-list{
+margin-top:20px;
+}
+
+.todo-item{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:14px;
+}
+
+.add-task{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.add-task input{
+flex:1;
+padding:14px;
+border:none;
+border-radius:15px;
+background:#eefaff;
+}
+
+.add-task button{
+padding:14px 20px;
+border:none;
+border-radius:15px;
+background:#9ce4b2;
+color:white;
+font-size:20px;
+cursor:pointer;
+}
+
+/* QUOTES */
+
+.quote-box{
+text-align:center;
+font-size:22px;
+line-height:1.6;
+}
+
+/* MUSIC */
+
+.music-player iframe{
+width:100%;
+height:180px;
+border:none;
+border-radius:18px;
+margin-top:15px;
+}
+
+/* END BUTTON */
+
+.end-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+background:#ff9494;
+color:white;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.top-row{
+grid-template-columns:1fr;
+}
+
+.main-grid{
+grid-template-columns:1fr;
+}
+
+.register-card{
+width:100%;
+}
+
+.popup{
+width:90%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- REGISTER PAGE -->
+
+<div class="register-page" id="registerPage">
+
+<div class="register-card">
+
+<div class="logo">StudyPal 🌱</div>
+
+<div class="tagline">
+Your Cozy Study Buddy 💙
+</div>
+
+<div class="input-group">
+
+<label>Name</label>
+
+<input type="text" id="name" placeholder="Enter your name">
+
+</div>
+
+<div class="input-group">
+
+<label>Class</label>
+
+<select id="classSelect">
+
+<option value="">Select Class</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
+
+</select>
+
+</div>
+
+<div class="input-group" id="streamBox" style="display:none;">
+
+<label>Stream</label>
+
+<select>
+
+<option>PCB</option>
+<option>PCM</option>
+<option>PCMB</option>
+<option>Commerce</option>
+<option>Humanities</option>
+
+</select>
+
+</div>
+
+<button class="continue-btn" onclick="showPopup()">
+Continue →
+</button>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+<h2 id="welcomeText">✨ Welcome ✨</h2>
+
+<p style="margin-top:15px; line-height:1.7;">
+Hope this helps you focus! You can do it!! Fighting!! 💖
+</p>
+
+<button onclick="enterDashboard()">
+Let's Begin!
+</button>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="dashboard" id="dashboard">
+
+<!-- TOP ROW -->
+
+<div class="top-row">
+
+<div class="card small-card">
+
+<h2 id="clock">00:00:00</h2>
+
+<p>IST Time</p>
+
+</div>
+
+<div class="card small-card">
+
+<h2 id="coins">10 ❤️</h2>
+
+<p>Coins</p>
+
+</div>
+
+<div class="card small-card">
+
+<h2 id="streak">1 🔥</h2>
+
+<p>Day Streak</p>
+
+</div>
+
+</div>
+
+<!-- MAIN GRID -->
+
+<div class="main-grid">
+
+<!-- POMODORO -->
+
+<div class="card">
+
+<h2>Pomodoro Sessions</h2>
+
+<div class="timer-circle" id="circle">
+
+<div class="inner-circle">
+
+<div class="time" id="pomodoro">
+45:00
+</div>
+
+<p id="sessionType">Work Session</p>
+
+</div>
+
+</div>
+
+<div class="progress-bar">
+
+<div class="progress" id="progress"></div>
+
+</div>
+
+<div class="button-group">
+
+<button class="start" onclick="startPomodoro()">
+Start
+</button>
+
+<button class="pause" onclick="pausePomodoro()">
+Pause
+</button>
+
+<button class="reset" onclick="resetPomodoro()">
+Reset
+</button>
+
+</div>
+
+</div>
+
+<!-- TODO -->
+
+<div class="card">
+
+<h2>To-Do Checklist</h2>
+
+<div class="todo-list" id="todoList"></div>
+
+<div class="add-task">
+
+<input type="text" id="taskInput" placeholder="Add Task">
+
+<button onclick="addTask()">+</button>
+
+</div>
+
+</div>
+
+<!-- QUOTES -->
+
+<div class="card">
+
+<div class="quote-box" id="quoteBox">
+“Small progress is still progress.” 🌱
+</div>
+
+</div>
+
+<!-- MUSIC -->
+
+<div class="card">
+
+<h2>Study Music 🎵</h2>
+
+<div class="music-player">
+
+<iframe
+src="https://www.youtube.com/embed/amfWIRasxtI?autoplay=1&loop=1&playlist=amfWIRasxtI">
+</iframe>
+
+</div>
+
+</div>
+
+</div>
+
+<button class="end-btn" onclick="endSession()">
+End Session
+</button>
+
+</div>
+
+<script>
+
+/* STREAM */
+
+document.getElementById("classSelect").addEventListener("change",function(){
+
+if(this.value=="11" || this.value=="12"){
+
+document.getElementById("streamBox").style.display="block";
+
+}
+else{
+
+document.getElementById("streamBox").style.display="none";
+
+}
+
+});
+
+/* POPUP */
+
+function showPopup(){
+
+let userName = document.getElementById("name").value.trim();
+
+if(userName==""){
+userName="Friend";
+}
+
+document.getElementById("welcomeText").innerHTML =
+`✨ Welcome ${userName}! ✨`;
+
+document.getElementById("popup").style.display="block";
+
+}
+
+/* ENTER DASHBOARD */
+
+function enterDashboard(){
+
+document.getElementById("popup").style.display="none";
+
+document.getElementById("registerPage").style.display="none";
+
+document.getElementById("dashboard").style.display="block";
+
+}
+
+/* CLOCK */
+
+function updateClock(){
+
+let now = new Date();
+
+let options = {
+
+timeZone:'Asia/Kolkata',
+hour:'2-digit',
+minute:'2-digit',
+second:'2-digit'
+
+};
+
+document.getElementById("clock").innerHTML =
+new Intl.DateTimeFormat('en-IN',options).format(now);
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+/* QUOTES */
+
+const quotes = [
+
+"Small progress is still progress 🌱",
+"Focus now so future you smiles later ✨",
+"You’re doing amazing 💙",
+"One step at a time 🌸",
+"Believe in yourself and all that you are 💖",
+"Dream big and dare to fail 🌻",
+"The secret to getting ahead is getting started 🚀",
+"You can do hard things 🌿"
+
+];
+
+let q = 0;
+
+setInterval(()=>{
+
+q = (q+1)%quotes.length;
+
+document.getElementById("quoteBox").innerHTML =
+quotes[q];
+
+},10000);
+
+/* TODO */
+
+let tasks = 0;
+
+function addTask(){
+
+let input = document.getElementById("taskInput");
+
+if(input.value.trim()=="" || tasks>=10) return;
+
+let div = document.createElement("div");
+
+div.classList.add("todo-item");
+
+div.innerHTML = `
+<input type="checkbox">
+<span>${input.value}</span>
+`;
+
+document.getElementById("todoList").appendChild(div);
+
+input.value="";
+tasks++;
+
+}
+
+/* POMODORO */
+
+let workTime = 45*60;
+let breakTime = 10*60;
+
+let totalTime = workTime;
+let currentTime = totalTime;
+
+let interval;
+let sessions = 0;
+let isBreak = false;
+
+function updatePomodoro(){
+
+let mins = Math.floor(currentTime/60);
+
+let secs = currentTime%60;
+
+document.getElementById("pomodoro").innerHTML =
+`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+
+let percent =
+((totalTime-currentTime)/totalTime)*100;
+
+document.getElementById("progress").style.width =
+percent + "%";
+
+let degrees = percent*3.6;
+
+document.getElementById("circle").style.background =
+`conic-gradient(#7fcfff ${degrees}deg,#9ee7b3 ${degrees}deg,#edf8ff ${degrees}deg)`;
+
+}
+
+function startPomodoro(){
+
+clearInterval(interval);
+
+interval = setInterval(()=>{
+
+if(currentTime>0){
+
+currentTime--;
+
+updatePomodoro();
+
+}
+else{
+
+clearInterval(interval);
+
+if(!isBreak){
+
+sessions++;
+
+let coins = 10 + (sessions*10);
+
+document.getElementById("coins").innerHTML =
+coins + " ❤️";
+
+alert("Study Session Complete! 🌸");
+
+isBreak = true;
+
+totalTime = breakTime;
+
+document.getElementById("sessionType").innerHTML =
+"Break Time";
+
+}
+else{
+
+alert("Break Over! ✨");
+
+isBreak = false;
+
+totalTime = workTime;
+
+document.getElementById("sessionType").innerHTML =
+"Work Session";
+
+}
+
+currentTime = totalTime;
+
+updatePomodoro();
+
+startPomodoro();
+
+}
+
+},1000);
+
+}
+
+function pausePomodoro(){
+
+clearInterval(interval);
+
+}
+
+function resetPomodoro(){
+
+clearInterval(interval);
+
+isBreak = false;
+
+totalTime = workTime;
+
+currentTime = totalTime;
+
+document.getElementById("sessionType").innerHTML =
+"Work Session";
+
+updatePomodoro();
+
+}
+
+/* END SESSION */
+
+function endSession(){
+
+if(sessions<3){
+
+alert("Leaving so soon? Hope you come back soon! Have a nice day! 🌸");
+
+}
+else{
+
+alert("Thank you for choosing StudyPal! I knew you could do it! 💖");
+
+}
+
+}
+
+updatePomodoro();
+
+</script>
+
+</body>
+</html>
